@@ -1,12 +1,26 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import path from "path";
 import hbs from "hbs";
+import multer from "multer";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
+const storageConfig = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "files");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname);
+    },
+});
+
+const upload = multer({ storage: storageConfig });
+
+app.use(express.urlencoded({ extended: true }));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -23,6 +37,17 @@ app.get("/upload", (req: Request, res: Response) => {
     res.render("upload", {
         title: "Upload files",
     });
+});
+
+app.post("/upload", upload.single("filedata"), (req: Request, res: Response, next: NextFunction) => {
+    const filedata = req.file;
+    if (!filedata) {
+        res.send("Error file upload");
+    } else {
+        res.render("upload", {
+            title: "Upload files",
+        });
+    }
 });
 
 app.listen(port, () => {
