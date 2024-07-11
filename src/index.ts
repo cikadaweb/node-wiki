@@ -3,11 +3,17 @@ import dotenv from "dotenv";
 import path from "path";
 import hbs from "hbs";
 import multer from "multer";
+import fs from "fs";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
+const filesDir = path.join(__dirname, '..', 'files');
+if (!fs.existsSync(filesDir)) {
+    fs.mkdirSync(filesDir);
+}
 
 const storageConfig = multer.diskStorage({
     destination: (req, file, cb) => {
