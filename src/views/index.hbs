@@ -8,8 +8,15 @@
     <title>{{title}}</title>
 </head>
 <body>
- <h1>Main page</h1>
- {{> menu}}
-<div>{{description}}</div>
+    <h1>Main page</h1>
+    {{> menu}}
+    <div>{{description}}</div>
+    <div>
+        <ul>
+            {{#each files}}
+                <li><a href="../files/{{this}}" title="{{this}}" target="_blank">{{this}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
 </body>
 </html>
