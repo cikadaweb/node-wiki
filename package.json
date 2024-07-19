@@ -5,9 +5,11 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "start": "node dist/index.ts",
+    "start": "node dist/index.js",
     "build": "npx tsc",
-    "test": "jest --config jest.config.ts"
+    "test": "jest --config jest.config.ts",
+    "test:watch": "jest --watch",
+    "test:integration": "jest --config jest.config.ts --testPathPattern=integration-tests"
   },
   "jest": {
     "transform": {
@@ -30,7 +32,10 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.12.7",
     "jest": "^29.7.0",
+    "jest-environment-puppeteer": "^10.0.1",
     "nodemon": "^3.1.0",
+    "portfinder": "^1.0.32",
+    "puppeteer": "^22.13.1",
     "ts-jest": "^29.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"

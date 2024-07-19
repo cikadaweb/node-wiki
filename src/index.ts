@@ -5,7 +5,7 @@ import { engine } from "express-handlebars";
 import multer from "multer";
 import fs from "fs";
 import { getFiles } from "./folder";
-import {getUniqueValues} from "./helpers/getUniqueValues";
+import { getUniqueValues } from "./helpers/getUniqueValues";
 
 dotenv.config();
 
@@ -13,7 +13,6 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 const publicDir = path.join(__dirname, "..", "public");
-
 const filesDir = path.join(publicDir, "files");
 
 if (!fs.existsSync(filesDir)) {
@@ -86,6 +85,10 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.render('500');
 });
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
+  });
+}
+
+export { app };
