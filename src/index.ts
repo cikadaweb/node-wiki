@@ -5,6 +5,7 @@ import { engine } from "express-handlebars";
 import multer from "multer";
 import fs from "fs";
 import { getFiles } from "./folder";
+import {getUniqueValues} from "./helpers/getUniqueValues";
 
 dotenv.config();
 
@@ -41,7 +42,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(publicDir));
 
 app.get("/", (req: Request, res: Response) => {
-  res.render('home', { title: 'Home' });
+  res.render('home', { title: 'Home', uniqueValues: getUniqueValues([1, 2, 3, 2, 1, 4, 3]) });
 });
 
 app.get("/filestorage", (req: Request, res: Response) => {
